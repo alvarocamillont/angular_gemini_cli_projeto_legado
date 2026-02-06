@@ -1,0 +1,11 @@
+ <div *ngIf="loading" class="loader">Buscando Digimons no Arquivo Digital...</div>
+    
+    <div *ngIf="!loading && digimons.length > 0">
+      <h3>Lista de Digimons (Legacy)</h3>
+      <div *ngFor="let d of digimons" (click)="onSelect(d)" class="card">
+        <img [src]="d.image" width="50">
+        <span>{{ d.name }}</span>
+      </div>
+    </div>
+
+<div *ngIf="!loading && digimons.length === 0">Nenhum dado encontrado.</div>
