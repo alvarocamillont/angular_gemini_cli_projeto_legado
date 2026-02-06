@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { DigimonList } from './digimon-list';
 
 describe('DigimonList', () => {
@@ -8,13 +9,17 @@ describe('DigimonList', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DigimonList]
+      imports: [DigimonList],
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
     })
     .compileComponents();
 
     fixture = TestBed.createComponent(DigimonList);
     component = fixture.componentInstance;
-    await fixture.whenStable();
+    fixture.detectChanges();
   });
 
   it('should create', () => {

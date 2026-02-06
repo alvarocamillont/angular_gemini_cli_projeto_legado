@@ -1,11 +1,19 @@
- <div *ngIf="loading" class="loader">Buscando Digimons no Arquivo Digital...</div>
-    
-    <div *ngIf="!loading && digimons.length > 0">
-      <h3>Lista de Digimons (Legacy)</h3>
-      <div *ngFor="let d of digimons" (click)="onSelect(d)" class="card">
-        <img [src]="d.image" width="50">
-        <span>{{ d.name }}</span>
-      </div>
-    </div>
-
-<div *ngIf="!loading && digimons.length === 0">Nenhum dado encontrado.</div>
+@if (digimonsResource.isLoading()) {
+  <div class="loader">Buscando Digimons no Arquivo Digital...</div>
+} @else {
+  @if (digimonsResource.value(); as digimons) {
+    @if (digimons.length > 0) {
+      <h3>Lista de Digimons (Modern)</h3>
+      @for (d of digimons; track d.id) {
+        <div (click)="onSelect(d)" class="card">
+          <img [src]="d.image" width="50" alt="{{ d.name }}">
+          <span>{{ d.name }}</span>
+        </div>
+      }
+    } @else {
+      <div>Nenhum dado encontrado.</div>
+    }
+  } @else if (digimonsResource.error()) {
+    <div class="error">Erro ao carregar Digimons.</div>
+  }
+}
